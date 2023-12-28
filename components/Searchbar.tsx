@@ -1,0 +1,75 @@
+"use client";
+
+import { scrapeAndStoreProduct } from "@/lib/actions";
+import { hostname } from "os";
+import { FormEvent, useState } from "react";
+
+const SearchBar = () => {
+  const [searchPrompt, setsearchPrompt] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const isValidAmazonProductUrl = (url: string) => {
+    try {
+      const parsedURL = new URL(url);
+      const hostname = parsedURL.hostname;
+
+      //check if host name
+      if (
+        hostname.includes("amazon.com") ||
+        hostname.includes("amazon.") ||
+        hostname.endsWith("amazon")
+      ) {
+        return true;
+      }
+    } catch (error) {
+      console.log("error");
+      return false;
+    } 
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    console.log("triggered");
+    event.preventDefault();
+
+    const isValidLink = isValidAmazonProductUrl(searchPrompt);
+
+    if (!isValidLink) return alert("please provide a valid link");
+  
+    try {
+      
+      setIsLoading(true);
+
+      const product=await scrapeAndStoreProduct(searchPrompt)
+
+    } catch (error) {
+
+
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <>
+      
+      <form className="flex flex-wrap gap-4 mt-12" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={searchPrompt}
+          onChange={(e) => setsearchPrompt(e.target.value)}
+          placeholder="Enter Product Link"
+          className="searchbar-input"
+        />
+        <button
+          type="submit"
+          className="searchbar-btn hover:bg-green-500"
+          disabled={searchPrompt === ""}
+        >
+          {isLoading ? "Searching..." : "Search Now"}
+        </button>
+      </form>
+    </>
+  );
+};
+
+export default SearchBar;
