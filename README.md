@@ -1,3 +1,3 @@
 # PriceWise-nextJs-
 
-![pricewise](https://github.com/s2ahil/PriceWise-nextJs-/assets/101473078/55ba2e6e-3240-4765-b143-3cb3f8210a65)
+<img width="804" alt="image" src="https://github.com/s2ahil/PriceWise-nextJs-/assets/101473078/c89d1cf1-9fa2-48c6-90f7-29b430c579e5">
